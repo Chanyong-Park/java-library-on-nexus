@@ -12,19 +12,19 @@ $ docker run -d --name nexus -p 8081:8081 -v nexus-data:/nexus-data sonatype/nex
 $ docker ps -a | grep -i nexus
 
 ### nexus admin 비밀번호 확인 및 실행
-1) 비밀번호 확인
+(1) 비밀번호 확인
 ```
 $ docker exec -it nexus /bin/sh   // nexus 컨테이너 접속
 # cat /nexus-data/admin.password  // 초기비밀번호 확인
 02894ef2-e3f6-48c0-933f-49ec67beb117
 ```
-2) 브라우저에서 아래 url 입력
+(2) 브라우저에서 아래 url 입력
    http://localhost:8081 
    
-3) 접속 후 admin / (초기비밀번호) 입력 후와 같이 admin / admin 으로 설정
+(3) 접속 후 admin / (초기비밀번호) 입력 후와 같이 admin / admin 으로 설정
    admin / admin 으로 설정
 
-4) 익명 접근은 불가하도록 설정
+(4) 익명 접근은 불가하도록 설정
 
 ## 2. Nexus repository에 배포하기
 ### gradle.properties 파일 생성
@@ -80,7 +80,7 @@ $ ./gradlew publish
 ```
 
 ### nexus의 repository에서 생성 확인
-1) 해당 리포지토리에서 생성여부를 확인
+(1) 해당 리포지토리에서 생성여부를 확인
 
 ## 3. 다른 프로젝트에서 해당 Library 사용하기
 ### gradle.properties 을 동일하게 가져와서 사용
