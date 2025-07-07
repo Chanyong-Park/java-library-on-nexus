@@ -26,7 +26,7 @@ $ docker exec -it nexus /bin/sh   // nexus 컨테이너 접속
 
 4) 익명 접근은 불가하도록 설정
 
-## spring boot 프로젝트 Nexus maven repository에 배포하기
+## Nexus repository에 배포하기
 ### gradle.properties 파일 생성
   - 프로젝트 root 디렉토리에 생성하거나 C:\Users\<user명>\.gradle\ 디렉토리에 파일을 생성
   - 파일 내용
@@ -46,6 +46,9 @@ plugins {
     id 'java-library'    // 또는 id 'java'
     id 'maven-publish'
 }
+
+group = 'com.cooldragon'
+version = '0.0.3-SNAPSHOT'
 
 ...
 
@@ -78,3 +81,29 @@ $ ./gradlew publish
 
 ### nexus의 repository에서 생성 확인
 1) 해당 리포지토리에서 생성여부를 확인
+
+## 다른 프로젝트에서 해당 Library 사용하기
+### gradle.properties 을 동일하게 가져와서 사용
+
+### gradle.build 설정
+```
+...
+repositories {
+	mavenCentral()
+    maven {
+		url = uri(findProperty("nexusUrl"))
+		allowInsecureProtocol = true // HTTP 허용
+		credentials {
+			username = findProperty("nexusUsername")
+			password = findProperty("nexusPassword")
+		}
+    }
+}
+...
+dependencies {
+...
+    implementation 'com.cooldragon:common:0.0.3-SNAPSHOT'   // 배포된 라이브러리 group, artifact, 버전 설정
+...
+}
+...
+```
